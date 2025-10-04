@@ -1,0 +1,271 @@
+:root {
+  --primary: #1a73e8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.calendar {
+  background: #fff;
+  padding: 12px;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 150px);
+  overflow: hidden;
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  flex-shrink: 0;
+}
+
+.controls > button {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.controls > button:first-child {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+.title {
+  font-size: 1.5em;
+  font-weight: 400;
+}
+
+.view-selectors {
+  display: flex;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.view-selectors button {
+  padding: 8px 12px;
+  border: none;
+  cursor: pointer;
+  background: #e0e0e0;
+}
+
+.view-selectors button.active {
+  background: var(--primary);
+  color: white;
+  font-weight: 600;
+}
+
+.weekdays {
+  display: flex;
+  justify-content: space-around;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.grid.mobile {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.cell {
+  min-height: 80px;
+  border: 1px solid #eee;
+  padding: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+}
+
+.cell.other-month {
+  background-color: #f7f7f7;
+  color: #aaa;
+}
+
+.date {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.ev {
+  color: #fff;
+  padding: 2px 4px;
+  border-radius: 4px;
+  margin-bottom: 2px;
+  font-size: 11px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.timeslot-grid {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.day-headers {
+  display: flex;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #fff;
+  border-bottom: 1px solid #ccc;
+  flex-shrink: 0;
+}
+
+.time-column-header {
+  width: 60px;
+  flex-shrink: 0;
+}
+
+.day-header {
+  flex: 1;
+  text-align: center;
+  font-weight: 600;
+  padding: 5px 0;
+  height: 30px;
+  cursor: pointer;
+}
+
+.grid-container {
+  display: flex;
+  overflow-y: auto;
+  max-height: calc(100vh - 130px);
+}
+
+.time-column {
+  width: 60px;
+  flex-shrink: 0;
+  font-size: 12px;
+  text-align: right;
+  padding-right: 5px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.hour-row {
+  height: 90px;
+  border-bottom: 1px dashed #eee;
+  border-right: 1px dashed #eee;
+  font-size: 12px;
+  color: #757575;
+  text-align: right;
+  line-height: 90px;
+  box-sizing: border-box;
+}
+
+.hour-row > div {
+  position: relative;
+  top: auto;
+  transform: none;
+}
+
+.day-columns-container {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  height: 2160px;
+}
+
+.day-columns-container.week-view .day-column {
+  min-width: calc(100% / 7);
+}
+
+.day-column {
+  flex: 1;
+  border-right: 1px solid #eee;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+}
+
+.day-column:last-child {
+  border-right: none;
+}
+
+.hour-slot {
+  height: 90px;
+  border-bottom: 1px dashed #eee;
+  cursor: pointer;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.timeslot-ev {
+  position: absolute;
+  width: 80%;
+  left: 10%;
+  padding: 2px 4px;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 11px;
+  z-index: 2;
+  overflow: hidden;
+  line-height: 1.2;
+}
+
+@media (max-width: 700px) {
+  .cell {
+    min-height: 60px;
+  }
+}
+
+.tooltip-wrapper {
+  position: relative;
+  z-index: 10;
+}
+
+.global-tooltip {
+  position: fixed;
+  transform: translateX(-50%);
+  background: white;
+  color: #333;
+  font-size: 13px;
+  border-radius: 6px;
+  padding: 12px 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  white-space: normal;
+  z-index: 10000;
+  pointer-events: none;
+  width: max-content;
+  max-width: 280px;
+  min-width: 220px;
+}
+
+.global-tooltip .tooltip-arrow {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid white;
+}
+
+.global-tooltip .tooltip-content {
+  text-align: left;
+  word-break: break-word;
+}
+
+.timeslot-ev,
+.ev {
+  z-index: 20;
+}

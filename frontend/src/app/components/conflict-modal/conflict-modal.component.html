@@ -1,0 +1,29 @@
+<div class="backdrop" *ngIf="visible">
+  <div class="modal">
+    <h3>Conflict detected</h3>
+
+    <div *ngIf="conflicts.length > 0">
+      <p>Conflicting events:</p>
+      <ul>
+        <li *ngFor="let c of conflicts">
+          {{ c.event?.title }} — {{ c.event?.start | date:'shortTime' }} - {{ c.event?.end | date:'shortTime' }} on {{ c.event?.start | date:'mediumDate' }}
+        </li>
+      </ul>
+    </div>
+
+    <div *ngIf="suggestions.length > 0">
+      <p>Suggestions:</p>
+      <ul>
+        <li *ngFor="let s of suggestions">
+          <button (click)="choose(s)">
+            {{ s.start | date:'shortTime' }} - {{ s.end | date:'shortTime' }} on {{ s.start | date:'mediumDate' }}
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <div class="actions">
+      <button (click)="close()">Cancel</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+<div class="modal" *ngIf="visible">
+  <div class="sheet">
+    <h3>Create / Edit Event</h3>
+    <form [formGroup]="form" (ngSubmit)="save()">
+
+      <label>Title</label>
+      <input #formField formControlName="title" [class.invalid]="hasError('title')" />
+      <div *ngIf="hasError('title')" class="error">Title is required.</div>
+
+      <label>Category</label>
+      <select #formField formControlName="category">
+        <option value="meeting">Meeting</option>
+        <option value="status">Status</option>
+        <option value="stand up">Stand Up</option>
+        <option value="townhall">Townhall</option>
+        <option value="KT">KT</option>
+      </select>
+
+      <label>Start</label>
+      <input #formField type="datetime-local" formControlName="start" [min]="getMinDateTime()"
+        [class.invalid]="hasError('start')" />
+      <div *ngIf="hasError('start')" class="error">Start time is required.</div>
+      <div *ngIf="hasFormError('startInPast')" class="error">Start time must be in the future.</div>
+
+      <label>End</label>
+      <input #formField type="datetime-local" formControlName="end" [min]="form.value.start || getMinDateTime()"
+        [class.invalid]="hasError('end')" />
+      <div *ngIf="hasError('end')" class="error">End time is required.</div>
+      <div *ngIf="hasFormError('endBeforeStart')" class="error">End time must be after start time.</div>
+
+      <label>Participants (comma separated)</label>
+      <input #formField formControlName="participants" [class.invalid]="hasError('participants')" />
+      <div *ngIf="hasError('participants')" class="error">Participants are required.</div>
+
+      <div class="actions">
+        <button *ngIf="isEditing" type="button" class="delete-button" (click)="delete()">Delete</button>
+        <button type="button" (click)="cancel()">Cancel</button>
+        <button type="submit">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="toast" *ngIf="toastVisible">
+  {{ toastMessage }}
+</div>
