@@ -5,7 +5,8 @@ import { CalendarEvent } from '../models/event.model';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
-  private baseUrl = 'http://localhost:3000';
+  // private baseUrl = 'http://localhost:3000';
+  private baseUrl = 'https://calendar-app-kaio.onrender.com/'
 
   constructor(private http: HttpClient) {}
 
